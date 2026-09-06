@@ -1,0 +1,77 @@
+# Default rule set plus the opt-in rules that carry the repo's conventions: no magic
+# numbers, no force unwrapping, shallow nesting (early return over pyramids).
+# Whitespace and wrapping belong to SwiftFormat, so the rules it already enforces are off.
+
+included:
+  - MyApp
+  - MyAppTests
+  - MyAppUITests
+
+excluded:
+  - MyApp/DesignSystem/Generated
+  - MyApp/API/Generated
+  - MyApp.xcodeproj
+  - DerivedData
+  - design
+  - .build
+
+disabled_rules:
+  - todo # work is tracked outside the source
+  - trailing_whitespace # owned by SwiftFormat
+
+opt_in_rules:
+  - closure_spacing
+  - contains_over_filter_count
+  - empty_count
+  - explicit_init
+  - fatal_error_message
+  - first_where
+  - force_unwrapping
+  - implicitly_unwrapped_optional
+  - last_where
+  - multiline_arguments
+  - multiline_parameters
+  - no_magic_numbers
+  - prefer_self_type_over_type_of_self
+  - redundant_type_annotation
+  - sorted_first_last
+  - toggle_bool
+  - unneeded_parentheses_in_closure_argument
+  - vertical_parameter_alignment_on_call
+  - yoda_condition
+
+line_length:
+  warning: 110
+  error: 140
+  ignores_urls: true
+
+file_length:
+  warning: 400
+  error: 600
+
+function_body_length:
+  warning: 40
+  error: 80
+
+type_body_length:
+  warning: 250
+  error: 400
+
+# Early return over nesting: a second level of indentation inside a function is the limit.
+nesting:
+  type_level: 2
+  function_level: 2
+
+identifier_name:
+  min_length: 2
+  allowed_symbols: ["_"]
+  excluded:
+    - id
+    - x
+    - y
+    - dx
+    - dy
+    - to
+
+trailing_comma:
+  mandatory_comma: true

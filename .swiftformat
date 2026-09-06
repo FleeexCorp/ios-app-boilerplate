@@ -1,0 +1,29 @@
+# SwiftFormat owns whitespace, wrapping and mechanical rewrites; SwiftLint owns semantics.
+# Where both have an opinion the two configs must agree: trailing commas are settled here
+# with `--trailing-commas always` and in `.swiftlint.yml` with `mandatory_comma: true`.
+
+--swift-version 6.0
+
+# Layout
+--indent 4
+--max-width 110
+--wrap-arguments before-first
+--wrap-parameters before-first
+--wrap-collections before-first
+--wrap-conditions before-first
+--trailing-commas always
+
+# Style
+--self remove
+--strip-unused-args closure-only
+--import-grouping testable-last
+--header strip
+
+# Generated sources are regenerated, never edited; the rest holds no Swift worth formatting.
+--exclude MyApp/DesignSystem/Generated
+--exclude MyApp/API/Generated
+--exclude Packages
+--exclude MyApp.xcodeproj
+--exclude DerivedData
+--exclude design
+--exclude .build

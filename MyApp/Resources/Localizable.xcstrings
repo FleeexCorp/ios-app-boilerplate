@@ -1,0 +1,111 @@
+{
+  "sourceLanguage" : "en",
+  "strings" : {
+    "common.continue" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Continue" } },
+        "fr" : { "stringUnit" : { "state" : "translated", "value" : "Continuer" } }
+      }
+    },
+    "common.retry" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Retry" } },
+        "fr" : { "stringUnit" : { "state" : "translated", "value" : "Réessayer" } }
+      }
+    },
+    "error.couldNotRefresh" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Saved, but the latest data could not be loaded." } },
+        "fr" : { "stringUnit" : { "state" : "translated", "value" : "Enregistré, mais les dernières données n'ont pas pu être chargées." } }
+      }
+    },
+    "error.decoding" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "The server sent something this version cannot read." } },
+        "fr" : { "stringUnit" : { "state" : "translated", "value" : "Le serveur a envoyé une réponse que cette version ne peut pas lire." } }
+      }
+    },
+    "error.offline" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "You are offline." } },
+        "fr" : { "stringUnit" : { "state" : "translated", "value" : "Vous êtes hors ligne." } }
+      }
+    },
+    "error.server" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "The server could not complete the request." } },
+        "fr" : { "stringUnit" : { "state" : "translated", "value" : "Le serveur n'a pas pu traiter la demande." } }
+      }
+    },
+    "error.timeout" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "The request took too long." } },
+        "fr" : { "stringUnit" : { "state" : "translated", "value" : "La demande a pris trop de temps." } }
+      }
+    },
+    "error.unauthorized" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Your session has ended. Sign in again." } },
+        "fr" : { "stringUnit" : { "state" : "translated", "value" : "Votre session a expiré. Reconnectez-vous." } }
+      }
+    },
+    "error.unknown" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Something went wrong." } },
+        "fr" : { "stringUnit" : { "state" : "translated", "value" : "Une erreur s'est produite." } }
+      }
+    },
+    "home.card.body" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Tokens, glass on iOS 26 with a classic fallback on iOS 18, strings in two languages, tests on both simulators." } },
+        "fr" : { "stringUnit" : { "state" : "translated", "value" : "Tokens, verre sur iOS 26 avec repli classique sur iOS 18, chaînes en deux langues, tests sur les deux simulateurs." } }
+      }
+    },
+    "home.card.status" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Ready" } },
+        "fr" : { "stringUnit" : { "state" : "translated", "value" : "Prêt" } }
+      }
+    },
+    "home.card.title" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "The boilerplate is running" } },
+        "fr" : { "stringUnit" : { "state" : "translated", "value" : "Le boilerplate tourne" } }
+      }
+    },
+    "home.settings" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Settings" } },
+        "fr" : { "stringUnit" : { "state" : "translated", "value" : "Réglages" } }
+      }
+    },
+    "home.subtitle" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Run /kickoff to turn this screen into your app." } },
+        "fr" : { "stringUnit" : { "state" : "translated", "value" : "Lancez /kickoff pour transformer cet écran en votre app." } }
+      }
+    },
+    "home.title" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Home" } },
+        "fr" : { "stringUnit" : { "state" : "translated", "value" : "Accueil" } }
+      }
+    }
+  },
+  "version" : "1.0"
+}

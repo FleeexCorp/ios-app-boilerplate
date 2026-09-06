@@ -1,0 +1,127 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>MyApp · Home</title>
+<link rel="stylesheet" href="tokens.css">
+<link rel="stylesheet" href="glass.css">
+<script defer src="app.js"></script>
+<style>
+  /* Screen-local rules only. Anything reused twice moves to glass.css. */
+</style>
+</head>
+<body>
+<div class="stage">
+  <div class="device">
+    <div class="device__island"></div>
+    <div class="device__status"><span class="num">9:41</span><span><svg viewBox="0 0 40 12" fill="currentColor" aria-hidden="true"><rect x="0" y="6" width="3" height="6" rx="1"/><rect x="5" y="4" width="3" height="8" rx="1"/><rect x="10" y="2" width="3" height="10" rx="1"/><rect x="15" y="0" width="3" height="12" rx="1"/><rect x="22" y="1" width="16" height="10" rx="3" fill="none" stroke="currentColor" stroke-width="1.5"/><rect x="24" y="3" width="10" height="6" rx="1.5"/></svg></span></div>
+    <div class="device__home"></div>
+
+    <div class="device__content">
+      <!-- Floating glass chrome: content scrolls under it. The compact title fades in on scroll. -->
+      <header class="chrome">
+        <span></span>
+        <span class="chrome__title glass" data-en="Home" data-fr="Accueil">Home</span>
+        <button class="icon-btn glass" data-toggle-menu="more" aria-label="More"><i data-icon="ellipsis"></i></button>
+      </header>
+      <div class="edge edge--top"></div>
+
+      <main class="screen" id="screen">
+        <div class="title-block">
+          <h1 data-en="Home" data-fr="Accueil">Home</h1>
+          <p data-en="One sentence that says what this screen is for." data-fr="Une phrase qui dit à quoi sert cet écran.">One sentence that says what this screen is for.</p>
+        </div>
+
+        <!-- ?state=loading | empty | error | default. Every state a screen can be in exists here. -->
+        <section data-state="loading" hidden>
+          <div class="card"><div class="skeleton" style="height: 14px; width: 40%">&nbsp;</div><div class="skeleton" style="height: 28px; width: 60%; margin-top: 8px">&nbsp;</div></div>
+          <div class="list"><div class="row"><div class="skeleton" style="height: 14px; width: 100%">&nbsp;</div></div><div class="row"><div class="skeleton" style="height: 14px; width: 80%">&nbsp;</div></div></div>
+        </section>
+
+        <section data-state="empty" hidden>
+          <div class="card">
+            <div class="empty"><i data-icon="doc"></i><strong data-en="Nothing here yet" data-fr="Rien ici pour l'instant">Nothing here yet</strong><span data-en="Add a first item and it will show up here." data-fr="Ajoutez un premier élément et il apparaîtra ici.">Add a first item and it will show up here.</span></div>
+            <button class="btn btn--prominent btn--block" data-open-sheet="add" data-en="Add an item" data-fr="Ajouter un élément">Add an item</button>
+          </div>
+        </section>
+
+        <section data-state="error" hidden>
+          <div class="banner banner--danger"><i data-icon="warning"></i><div><strong data-en="Could not load" data-fr="Chargement impossible">Could not load</strong><p data-en="Check your connection, then try again." data-fr="Vérifiez votre connexion, puis réessayez.">Check your connection, then try again.</p></div><button class="btn btn--sm btn--tinted" data-en="Retry" data-fr="Réessayer">Retry</button></div>
+        </section>
+
+        <section data-state="default">
+          <div class="card">
+            <div class="stat"><span class="label" data-en="Key figure" data-fr="Chiffre clé">Key figure</span><span class="stat__value stat__value--hero num">42</span><span class="stat__delta stat__delta--down"><i data-icon="arrowDown"></i><span data-en="12% vs last week" data-fr="12 % vs semaine dernière">12% vs last week</span></span></div>
+          </div>
+
+          <div class="section">
+            <div class="label section__label" data-en="Recent" data-fr="Récent">Recent</div>
+            <div class="list">
+              <button class="row row--tappable" data-open-sheet="detail">
+                <span class="row__icon"><i data-icon="doc"></i></span>
+                <span class="row__main"><span class="row__title">First item</span><span class="row__sub" data-en="Today · a short secondary line" data-fr="Aujourd'hui · une ligne secondaire courte">Today · a short secondary line</span></span>
+                <span class="row__trail"><span class="pill pill--positive" data-en="Active" data-fr="Actif">Active</span><svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg></span>
+              </button>
+              <button class="row row--tappable" data-open-sheet="detail">
+                <span class="row__icon"><i data-icon="doc"></i></span>
+                <span class="row__main"><span class="row__title">Second item</span><span class="row__sub" data-en="Yesterday" data-fr="Hier">Yesterday</span></span>
+                <span class="row__trail"><span class="pill pill--warn" data-en="Pending" data-fr="En attente">Pending</span><svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg></span>
+              </button>
+            </div>
+          </div>
+        </section>
+      </main>
+
+      <!-- Floating tab bar: minimizes on scroll down (iOS 26), standard bar on iOS 18 -->
+      <nav class="tabbar glass" aria-label="Tabs">
+        <a class="tab" href="home.html" aria-current="page"><i data-icon="overview"></i><span data-en="Home" data-fr="Accueil">Home</span></a>
+        <a class="tab" href="home.html?state=empty"><i data-icon="doc"></i><span data-en="Library" data-fr="Bibliothèque">Library</span></a>
+        <a class="tab" href="home.html?state=error"><i data-icon="sliders"></i><span data-en="Settings" data-fr="Réglages">Settings</span></a>
+      </nav>
+      <div class="edge edge--bottom"></div>
+
+      <!-- Anchored menu: grows out of its trigger -->
+      <div class="menu glass glass--thick" data-menu="more" role="menu">
+        <button role="menuitem" data-toast="Refreshed"><span data-en="Refresh" data-fr="Actualiser">Refresh</span><i data-icon="refresh"></i></button>
+        <hr>
+        <button role="menuitem" class="danger" data-open-alert="delete"><span data-en="Delete all" data-fr="Tout supprimer">Delete all</span><i data-icon="trash"></i></button>
+      </div>
+    </div>
+
+    <div class="scrim"></div>
+
+    <!-- Draggable sheet: 1:1 tracking, rubber-band, velocity projected on release -->
+    <section class="sheet glass glass--thick" data-sheet="detail" role="dialog" aria-labelledby="detail-title">
+      <div class="sheet__grabber"></div>
+      <div class="sheet__head"><h2 id="detail-title" data-en="Item" data-fr="Élément">Item</h2><button class="icon-btn glass" data-close-sheet aria-label="Close"><i data-icon="close"></i></button></div>
+      <div class="sheet__body">
+        <div class="card"><dl class="kv"><dt data-en="Created" data-fr="Créé">Created</dt><dd class="num">2026-09-06</dd><dt>Id</dt><dd class="mono">itm_01J7…6R8T</dd></dl></div>
+      </div>
+      <div class="sheet__actions"><button class="btn btn--tinted btn--block" data-copy="itm_01J7ZK3Q9V8M2N4P6R8T" data-en="Copy id" data-fr="Copier l'id">Copy id</button></div>
+    </section>
+
+    <section class="sheet glass glass--thick" data-sheet="add" role="dialog" aria-labelledby="add-title">
+      <div class="sheet__grabber"></div>
+      <div class="sheet__head"><h2 id="add-title" data-en="New item" data-fr="Nouvel élément">New item</h2><button class="icon-btn glass" data-close-sheet aria-label="Close"><i data-icon="close"></i></button></div>
+      <div class="sheet__body">
+        <div class="field"><label for="name" data-en="Name" data-fr="Nom">Name</label><input id="name" class="input" data-autofocus></div>
+      </div>
+      <div class="sheet__actions"><button class="btn btn--prominent btn--block" data-close-sheet data-toast="Added" data-en="Add" data-fr="Ajouter">Add</button></div>
+    </section>
+
+    <!-- Alert: destructive, irreversible actions only -->
+    <div class="alert glass glass--thick" data-alert="delete" role="alertdialog">
+      <h3 data-en="Delete everything?" data-fr="Tout supprimer ?">Delete everything?</h3>
+      <p data-en="This cannot be undone." data-fr="Cette action est irréversible.">This cannot be undone.</p>
+      <div class="alert__actions"><button class="btn btn--danger-filled btn--block" data-close-alert data-toast="Deleted" data-en="Delete" data-fr="Supprimer">Delete</button><button class="btn btn--glass btn--block" data-close-alert data-en="Cancel" data-fr="Annuler">Cancel</button></div>
+    </div>
+  </div>
+</div>
+<script>
+  // ?state=loading|empty|error|default selects the section shown; the view model's enum in SwiftUI.
+  const state = new URLSearchParams(location.search).get('state') || 'default';
+  document.querySelectorAll('[data-state]').forEach((s) => { s.hidden = s.dataset.state !== state; });
+</script>
+</body>
+</html>

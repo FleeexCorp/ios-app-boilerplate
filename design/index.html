@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>MyApp · Design gallery</title>
+<link rel="stylesheet" href="tokens.css">
+<link rel="stylesheet" href="glass.css">
+<script defer src="app.js"></script>
+<style>
+  body { background: var(--color-surface-sunken); }
+  .gallery-head { position: sticky; top: 0; z-index: 10; display: flex; align-items: center; justify-content: space-between; gap: var(--space-4); padding: var(--space-3) var(--space-5); margin: var(--space-4); border-radius: var(--radius-full); }
+  .gallery-head .wordmark { font-size: 22px; }
+  .gallery-head nav { display: flex; gap: var(--space-2); align-items: center; }
+  .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: var(--space-5); padding: 0 var(--space-5) var(--space-7); }
+  .shot { display: flex; flex-direction: column; gap: var(--space-2); }
+  .shot__frame { position: relative; aspect-ratio: 393 / 852; border-radius: 34px; overflow: hidden; border: 1px solid var(--color-border-strong); background: var(--color-bg); box-shadow: var(--shadow-1); }
+  .shot__frame iframe { position: absolute; inset: 0; width: 393px; height: 852px; border: 0; transform-origin: 0 0; pointer-events: none; }
+  .shot__frame a { position: absolute; inset: 0; }
+  .shot__meta { display: flex; justify-content: space-between; align-items: baseline; padding: 0 var(--space-1); }
+  .shot__meta strong { font-weight: 600; }
+  .shot__meta span { color: var(--color-text-muted); font-size: var(--font-size-xs); }
+  .flows { padding: 0 var(--space-5) var(--space-6); display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: var(--space-3); }
+</style>
+</head>
+<body>
+  <header class="gallery-head glass glass--thick">
+    <div style="display:flex; align-items:center; gap: var(--space-4)"><span class="wordmark">MyApp</span><span class="t-sm muted">iOS · design prototypes · Liquid Glass on the tokens</span></div>
+    <nav>
+      <div class="segmented glass" data-group="theme"><button data-theme-option="" aria-selected="true">System</button><button data-theme-option="light" aria-selected="false">Light</button><button data-theme-option="dark" aria-selected="false">Dark</button></div>
+      <div class="segmented glass" data-group="lang"><button data-lang-option="en" aria-selected="true">EN</button><button data-lang-option="fr" aria-selected="false">FR</button></div>
+    </nav>
+  </header>
+
+  <section class="flows">
+    <div class="card"><div class="label" style="margin-bottom: var(--space-2)">Flows to try</div>
+      <ul class="t-sm" style="display:grid; gap:6px">
+        <li>Home → tap a row → detail sheet → drag it down</li>
+        <li>Home → ⋯ menu → Delete all → alert</li>
+        <li>Library (empty state) → Add an item → sheet → Add</li>
+      </ul></div>
+    <div class="card"><div class="label" style="margin-bottom: var(--space-2)">Gestures</div>
+      <ul class="t-sm" style="display:grid; gap:6px">
+        <li>Drag any sheet: 1:1 tracking, rubber-band above rest, release velocity projected to decide dismiss vs. snap back</li>
+        <li>Grab a sheet mid-flight: it follows the finger from where it is</li>
+        <li>Scroll down: the tab bar minimizes to the selected tab; scroll up or tap it to restore</li>
+      </ul></div>
+    <div class="card"><div class="label" style="margin-bottom: var(--space-2)">States via URL</div>
+      <ul class="t-sm mono" style="display:grid; gap:6px">
+        <li>home.html?state=loading | empty | error</li>
+        <li>home.html?sheet=detail | add</li>
+      </ul></div>
+  </section>
+
+  <main class="grid" id="grid"></main>
+
+<script>
+  // [file, title, note]. One entry per screen and per state worth a thumbnail.
+  const screens = [
+    ['home.html', 'Home', 'default state'],
+    ['home.html?state=loading', 'Home · loading', 'skeleton'],
+    ['home.html?state=empty', 'Home · empty', 'first-run'],
+    ['home.html?state=error', 'Home · error', 'inline retry'],
+    ['home.html?sheet=detail', 'Home · detail sheet', 'draggable'],
+  ];
+  const grid = document.getElementById('grid');
+  for (const [file, title, note] of screens) {
+    const shot = document.createElement('article');
+    shot.className = 'shot';
+    shot.innerHTML = `<div class="shot__frame"><iframe src="${file}" title="${title}" loading="lazy"></iframe><a href="${file}" aria-label="Open ${title}"></a></div><div class="shot__meta"><strong>${title}</strong><span>${note}</span></div>`;
+    grid.appendChild(shot);
+  }
+  // Scale the 393px frames to the column width.
+  const fit = () => document.querySelectorAll('.shot__frame').forEach((f) => { const s = f.clientWidth / 393; f.querySelector('iframe').style.transform = `scale(${s})`; });
+  addEventListener('resize', fit); requestAnimationFrame(fit);
+  // The gallery's theme and language propagate into the frames on load.
+  addEventListener('storage', () => document.querySelectorAll('iframe').forEach((f) => f.contentWindow.location.reload()));
+</script>
+</body>
+</html>

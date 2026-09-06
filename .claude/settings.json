@@ -1,0 +1,50 @@
+{
+  "permissions": {
+    "allow": [
+      "Read(./**)",
+      "Bash(git status)",
+      "Bash(git status *)",
+      "Bash(git diff *)",
+      "Bash(git log *)",
+      "Bash(git show *)",
+      "Bash(git branch)",
+      "Bash(git branch *)",
+      "Bash(make generate)",
+      "Bash(make build)",
+      "Bash(make test)",
+      "Bash(make test-unit)",
+      "Bash(make test-ui)",
+      "Bash(make test-legacy)",
+      "Bash(make test-all)",
+      "Bash(make lint)",
+      "Bash(make format)",
+      "Bash(make tokens)",
+      "Bash(make resolve)",
+      "Bash(xcodegen *)",
+      "Bash(xcodebuild -list *)",
+      "Bash(xcodebuild -showsdks *)",
+      "Bash(xcodebuild -version)",
+      "Bash(xcrun simctl list *)",
+      "Bash(swiftformat *)",
+      "Bash(swiftlint *)",
+      "Bash(python3 Scripts/*)",
+      "Bash(ls *)",
+      "Bash(find *)",
+      "Bash(cat *)",
+      "Bash(open design/*)"
+    ],
+    "deny": [
+      "Read(./Config/Local.xcconfig)",
+      "Read(.env*)",
+      "Read(**/*.p8)",
+      "Read(**/*.p12)",
+      "Read(**/*.mobileprovision)"
+    ],
+    "ask": [
+      "Bash(git push *)",
+      "Bash(xcodebuild archive *)",
+      "Bash(xcrun altool *)",
+      "Bash(xcrun notarytool *)"
+    ]
+  }
+}

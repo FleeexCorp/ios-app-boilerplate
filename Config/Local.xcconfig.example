@@ -1,0 +1,22 @@
+// LOCAL DEV OVERRIDES TEMPLATE.
+//
+// Copy this file to `Config/Local.xcconfig` (gitignored) and edit it. `Staging.xcconfig`
+// and `Production.xcconfig` pick it up on their own through `#include? "Local.xcconfig"`,
+// so there is nothing to change in `project.yml` or in the schemes. Delete the file to go
+// back to the committed values.
+//
+// Do NOT include Staging.xcconfig back from here: Staging already includes this file,
+// and the two includes would form a cycle.
+//
+// A native app issues no cross-origin request, so a local API needs no CORS entry for it:
+// the simulator shares the Mac's network stack and reaches `localhost` directly.
+
+API_BASE_URL = http:/$()/localhost:3000
+
+// Running on your own iPhone with a free Apple ID (Personal Team) instead of the paid
+// developer account: uncomment and adjust. A Personal Team cannot register the app's own
+// bundle id, so it is overridden with a dev one.
+//
+// PRODUCT_BUNDLE_IDENTIFIER = com.example.myapp.dev
+// DEVELOPMENT_TEAM = XXXXXXXXXX
+// CODE_SIGN_STYLE = Automatic

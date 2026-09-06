@@ -1,0 +1,13 @@
+#include "Base.xcconfig"
+
+// Production environment. Every value below is a public deployment identifier: it ships
+// inside the app bundle's Info.plist, so no secret may ever be added here.
+//
+// `//` opens a comment in xcconfig, which would swallow the rest of a URL. `$()` expands
+// to nothing and breaks the pair up: `https:/$()/host` resolves to `https://host`.
+
+API_BASE_URL = https:/$()/api.example.com
+
+// Personal overrides, absent from the repository. Same file as Staging: a developer
+// signing with a Personal Team needs the dev bundle id in every configuration Xcode shows.
+#include? "Local.xcconfig"

@@ -1,0 +1,11 @@
+.DS_Store
+.claude/settings.local.json
+.claude/worktrees/
+Config/Local.xcconfig
+*.xcodeproj
+DerivedData/
+*.xcuserdata
+MyApp/Resources/Info.plist
+build/
+.spm/
+.swiftpm/

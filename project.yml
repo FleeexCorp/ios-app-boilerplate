@@ -1,0 +1,155 @@
+name: MyApp
+
+options:
+  minimumXcodeGenVersion: "2.46.0"
+  deploymentTarget:
+    iOS: "18.0"
+  createIntermediateGroups: true
+  generateEmptyDirectories: true
+  groupSortPosition: top
+
+configs:
+  Staging: debug
+  Production: release
+
+configFiles:
+  Staging: Config/Staging.xcconfig
+  Production: Config/Production.xcconfig
+
+settings:
+  base:
+    SWIFT_VERSION: "6.0"
+    SWIFT_STRICT_CONCURRENCY: complete
+    ENABLE_USER_SCRIPT_SANDBOXING: YES
+    SWIFT_EMIT_LOC_STRINGS: YES
+
+# SPM is the only dependency manager. `Package.resolved` lives inside the generated
+# (gitignored) `.xcodeproj`, so `Scripts/sync-package-resolved.sh` mirrors it to the repo
+# root: `save` after a resolution, `restore` right after `xcodegen generate`.
+#
+# No dependency ships with the boilerplate. Add one here and justify it in the commit.
+# packages:
+#   Example:
+#     url: https://github.com/org/example
+#     from: "1.0.0"
+
+# XcodeGen injects its own per-platform defaults at target level, which shadow the
+# project-level `settings`. iPhone-only therefore has to be declared per target.
+targetTemplates:
+  IPhoneOnly:
+    settings:
+      base:
+        TARGETED_DEVICE_FAMILY: "1"
+        SUPPORTS_MACCATALYST: NO
+        SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD: NO
+        SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD: NO
+
+targets:
+  MyApp:
+    type: application
+    platform: iOS
+    templates:
+      - IPhoneOnly
+    sources:
+      - path: MyApp
+        excludes:
+          - "**/.gitkeep"
+    info:
+      path: MyApp/Resources/Info.plist
+      properties:
+        CFBundleDisplayName: $(APP_DISPLAY_NAME)
+        # XcodeGen's own defaults for these two are the literals 1.0 and 1. They come from
+        # Base.xcconfig instead, and Core/Config/AppVersion.swift reads them back.
+        CFBundleShortVersionString: $(MARKETING_VERSION)
+        CFBundleVersion: $(CURRENT_PROJECT_VERSION)
+        UILaunchScreen:
+          UIColorName: DSBgDefault
+        UISupportedInterfaceOrientations:
+          - UIInterfaceOrientationPortrait
+        # Build configuration, resolved from the xcconfig of the active configuration.
+        # Read by Core/Config/BuildConfig.swift; public identifiers only, no secret.
+        APIBaseURL: $(API_BASE_URL)
+    settings:
+      base:
+        ASSETCATALOG_COMPILER_APPICON_NAME: AppIcon
+        ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME: AccentColor
+        GENERATE_INFOPLIST_FILE: NO
+
+  MyAppTests:
+    type: bundle.unit-test
+    platform: iOS
+    templates:
+      - IPhoneOnly
+    sources:
+      - path: MyAppTests
+      # The token source rides along so ColorAssetTests can check the whole generated roster.
+      - path: design/tokens.json
+        buildPhase: resources
+    dependencies:
+      - target: MyApp
+    settings:
+      base:
+        GENERATE_INFOPLIST_FILE: YES
+        PRODUCT_BUNDLE_IDENTIFIER: com.example.myapp.tests
+        # Base.xcconfig is bound project-wide; without this the bundles would all be named MyApp.
+        PRODUCT_NAME: $(TARGET_NAME)
+
+  MyAppUITests:
+    type: bundle.ui-testing
+    platform: iOS
+    templates:
+      - IPhoneOnly
+    sources:
+      - path: MyAppUITests
+    dependencies:
+      - target: MyApp
+    settings:
+      base:
+        GENERATE_INFOPLIST_FILE: YES
+        PRODUCT_BUNDLE_IDENTIFIER: com.example.myapp.uitests
+        # Base.xcconfig is bound project-wide; without this the bundles would all be named MyApp.
+        PRODUCT_NAME: $(TARGET_NAME)
+
+schemes:
+  MyApp-Staging:
+    build:
+      targets:
+        MyApp: all
+        MyAppTests: [test]
+        MyAppUITests: [test]
+    run:
+      config: Staging
+    test:
+      config: Staging
+      gatherCoverageData: true
+      coverageTargets:
+        - MyApp
+      targets:
+        - MyAppTests
+        - MyAppUITests
+    profile:
+      config: Staging
+    analyze:
+      config: Staging
+    archive:
+      config: Staging
+
+  MyApp-Production:
+    build:
+      targets:
+        MyApp: all
+        MyAppTests: [test]
+        MyAppUITests: [test]
+    run:
+      config: Production
+    test:
+      config: Production
+      targets:
+        - MyAppTests
+        - MyAppUITests
+    profile:
+      config: Production
+    analyze:
+      config: Production
+    archive:
+      config: Production

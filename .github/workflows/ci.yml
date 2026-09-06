@@ -1,0 +1,79 @@
+name: CI
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+env:
+  # Pins the SPM checkout directory so it can be cached; DerivedData's own path is hashed.
+  XCB_EXTRA: -clonedSourcePackagesDirPath .spm
+
+jobs:
+  lint:
+    name: Lint
+    runs-on: macos-26
+    timeout-minutes: 40
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install tools
+        run: brew install swiftformat swiftlint
+
+      - run: make lint
+
+      - name: Generated tokens are up to date
+        run: make tokens && git diff --exit-code
+
+  test:
+    # macos-26 ships iOS 26 runtimes only, macos-15 ships both iOS 18 and Xcode 26, so the
+    # legacy leg runs there. Both legs select the newest Xcode 26 the image carries.
+    name: Test (${{ matrix.flavor }})
+    runs-on: ${{ matrix.runner }}
+    timeout-minutes: 40
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - flavor: modern
+            runner: macos-26
+            target: test
+          - flavor: legacy
+            runner: macos-15
+            target: test-legacy
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Select Xcode 26
+        run: |
+          xcode=$(ls -d /Applications/Xcode_26*.app | sort -V | tail -1)
+          sudo xcode-select -s "$xcode"
+          xcodebuild -version
+
+      - name: Install XcodeGen
+        run: brew install xcodegen
+
+      - name: Cache SPM checkouts
+        uses: actions/cache@v4
+        with:
+          path: |
+            .spm
+            ~/Library/Caches/org.swift.swiftpm
+          key: spm-${{ matrix.runner }}-${{ hashFiles('Package.resolved') }}
+          restore-keys: spm-${{ matrix.runner }}-
+
+      - run: make generate
+
+      - run: make ${{ matrix.target }}
+
+      - name: Upload result bundle
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: xcresult-${{ matrix.flavor }}
+          path: build/results
+          retention-days: 7
