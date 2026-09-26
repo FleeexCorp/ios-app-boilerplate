@@ -1,9 +1,9 @@
 name: CI
 
+# Manual only: macOS minutes bill 10x, a run uses 500 to 700 of the org's 2,000 monthly
+# minutes, and an empty quota blocks every repo's jobs. Run the targets locally before merging.
 on:
-  pull_request:
-  push:
-    branches: [main]
+  workflow_dispatch:
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}

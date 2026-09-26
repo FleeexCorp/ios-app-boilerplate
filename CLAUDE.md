@@ -59,7 +59,8 @@ that lives in the gitignored `.xcodeproj`). The legacy destination is resolved t
 
 CI (`.github/workflows/ci.yml`) runs these exact targets: a `lint` job on macos-26 (plus a
 `make tokens` freshness check) and a `test` matrix, modern (macos-26, iOS 26) and legacy
-(macos-15, iOS 18), on pull requests and pushes to `main`.
+(macos-15, iOS 18), on manual dispatch only (`gh workflow run ci.yml`: macOS minutes bill
+10x, run the targets locally before merging).
 
 ## Xcode MCP
 
